@@ -1,4 +1,4 @@
-# 🚀 Rebuilding The Wheel – Data-Structures-Algorithms  
+# 🚀 Rebuilding The Wheel – Data-Structures & Algorithms  
 
 ## 📖 Overview  
 This repository is dedicated to **rebuilding core data structures and algorithms from scratch in Python**.  
