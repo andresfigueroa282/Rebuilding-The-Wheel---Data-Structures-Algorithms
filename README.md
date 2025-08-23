@@ -12,7 +12,7 @@ The purpose is to:
 
 ## 📈 Progress Tracker  
 
-- [ ] Arrays (custom implementation)  
+- [ ] [Arrays](https://github.com/andresfigueroa282/Rebuilding-The-Wheel---Data-Structures-Algorithms/blob/main/Arrays.ipynb)
 - [ ] Strings  
 - [ ] Linked Lists  
 - [ ] Stacks  
