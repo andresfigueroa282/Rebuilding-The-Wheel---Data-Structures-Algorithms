@@ -13,7 +13,7 @@ class Array:
     def append(self, value):
         if self.freeSpaceCheck():
             switch = False
-            for i in self.array:
+            for i in range(self.len()):
                 if self.array[i] is None and switch == False:
                     self.array[i] == value
                     switch = True
@@ -21,60 +21,57 @@ class Array:
         else:
             self.size += 1
             newArray = [self.size]
-            for i in self.array:
+            for i in range(self.len()):
                 newArray[i] = self.array
             newArray[self.size] = value
 
-    def get(self, index):
-        try:
-            self.array[index]
-        except IndexError:
-            print("Index Error, you tried accessing an index that can't be accessed")
+    def __getitem__(self, index):
+        if index < 0 or index >= self.len():
+            return "Index Out of Bounds Error"
+        else:
+            return self.array[index]
 
-    def set(self, index, value):
-        try:
+    def __setitem__(self, index, value):
+        if index < 0 or index >= self.len():
+            return "Index Out of Bounds Error"
+        else:
             self.array[index] = value
-        except IndexError:
-            print("Index Error, you tried accessing an index that can't be accessed")
 
     def insert(self, index, value):
-        i = 0
-        self.capacity += 1
-        self.size = self.capacity
-        
-        newArray = [self.capacity]
-        switch = False
-        while i < self.len():
-            if switch == False:
-                newArray[i] = self.array[i]
-                if i == index:
-                    switch == True
-            else:
-                newArray[i] = self.array[i +  1]
-            i += 1
+        if index < 0 or index >= self.len():
+            return "Index Out of Bounds Error"
+        if self.array[index] is None:
+            self.array[index] = value
+        else:
+            switch = False
+            self.size += 1
+            newArray = [None] * self.size
+            for i in range(self.size):
+                if switch == False:
+                    newArray[i] == self.array[i]
+                    if i == index:
+                        switch = True
+                        newArray[i] == value
+                else:
+                    newArray[i] == self.array[i - 1]
+                    
+
 
     def delete(self, index):
-        try:
-            self.size -= 1
-            if self.capacity < self.size:
-                self.capacity = self.size
-
-            newArray = [self.capacity - 1]
+        if index < 0 or index >= self.len():
+            return "Index Out of Bounds Error"
+        else:
             switch = False
-            while i < self.len():
-                if switch == False:
-                    if i == index:
-                        switch == True
-                else:
-                    newArray[i] = self.array[i +  1]
-                i += 1
-
-
-        except IndexError:
-            print("Index Error, you tried accessing an index that can't be accessed")
+            self.size -= 1
+            newArray = [None] * self.size
+            for i in range(self.size):
+                if i < index:
+                    newArray[i] == self.array[i]
+                if i > index:
+                    newArray[i] == self.array[i - 1]
 
     def freeSpaceCheck(self):
-        for i in range(self.len()):
+        for i in range(self.len() + 1):
               if self.array[i] is None:
                    return True
         return False
@@ -152,5 +149,11 @@ class TestArray:
         print(f"🏆 Final Score: {score:.2f}%")
 
 if __name__ == "__main__":
+
+
+    array = [1, 2, 3, 4]
+    for i in array:
+        print(i)
+
     tester = TestArray()
     tester.run_tests()
