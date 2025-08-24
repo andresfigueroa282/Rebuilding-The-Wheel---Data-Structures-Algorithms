@@ -6,29 +6,36 @@ class Array:
     def __init__(self, capacity = 5):
         self.capacity = capacity
         self.array = [None] * capacity
+        self.size = capacity
 
     def len(self):
         return self.size
     
     def append(self, value):
+
         if self.freeSpaceCheck():
             switch = False
+            print("Length of Array = ", self.len())
             for i in range(self.len()):
                 if self.array[i] is None and switch == False:
-                    self.array[i] == value
+                    print("Value @ Index", i , " is ", self.array[i])
+                    self.array[i] = value
                     switch = True
+                print("Index", i)
         
         else:
             self.size += 1
             newArray = [self.size]
             for i in range(self.len()):
                 newArray[i] = self.array
-            newArray[self.size] = value
+            newArray[self.size - 1] = value
 
     def __getitem__(self, index):
+        print(self.len())
         if index < 0 or index >= self.len():
             return "Index Out of Bounds Error"
         else:
+            print("@ __get__    Index is ", index)
             return self.array[index]
 
     def __setitem__(self, index, value):
@@ -55,8 +62,6 @@ class Array:
                 else:
                     newArray[i] == self.array[i - 1]
                     
-
-
     def delete(self, index):
         if index < 0 or index >= self.len():
             return "Index Out of Bounds Error"
@@ -70,11 +75,19 @@ class Array:
                 if i > index:
                     newArray[i] == self.array[i - 1]
 
+    def pop(self):
+        popped = self.array[self.size - 1]
+        self.size -= 1
+        newArray = [None] * self.size
+        for i in range(self.size):
+            newArray[i] == self.array[i]
+        return 
+
     def freeSpaceCheck(self):
-        for i in range(self.len() + 1):
-              if self.array[i] is None:
-                   return True
-        return False
+        if None in self.array:
+            return True
+        else:
+            return False
     
     def print(self):
         arrayString = "["
@@ -84,21 +97,24 @@ class Array:
         print(arrayString)
 
 
-    
+
 class TestArray:
     def __init__(self):
         self.tests_passed = 0
         self.tests_failed = 0
         self.total_tests = 0
 
-    def check(self, condition, message):
-        """Helper to check test results"""
+    def check(self, condition, message, expected=None, actual=None):
+        """Helper to check test results and print expected vs actual"""
         self.total_tests += 1
         if condition:
             print(f"✅ PASS: {message}")
             self.tests_passed += 1
         else:
             print(f"❌ FAIL: {message}")
+            if expected is not None or actual is not None:
+                print(f"   Expected: {expected}")
+                print(f"   Actual:   {actual}")
             self.tests_failed += 1
 
     def run_tests(self):
@@ -108,24 +124,36 @@ class TestArray:
 
         # Test 1: Append
         arr.append(10)
-        self.check(arr[0] == 10, "Append inserts correctly")
+        self.check(arr[0] == 10, "Append inserts correctly", expected=10, actual=arr[0])
 
         # Test 2: Insert
         arr.append(20)
         arr.insert(1, 15)
-        self.check(arr[1] == 15 and arr[2] == 20, "Insert shifts elements correctly")
+        self.check(arr[1] == 15 and arr[2] == 20,
+                   "Insert shifts elements correctly",
+                   expected=[10, 15, 20],
+                   actual=[arr[i] for i in range(arr.len())])
 
         # Test 3: Delete
         arr.delete(1)
-        self.check(arr[1] == 20, "Delete removes element and shifts")
+        self.check(arr[1] == 20,
+                   "Delete removes element and shifts",
+                   expected=20,
+                   actual=arr[1])
 
         # Test 4: Pop
         popped = arr.pop()
-        self.check(popped == 20 and len(arr) == 1, "Pop returns and removes last element")
+        self.check(popped == 20 and len(arr) == 1,
+                   "Pop returns and removes last element",
+                   expected=(20, 1),
+                   actual=(popped, arr.len()))
 
         # Test 5: Set item
         arr[0] = 99
-        self.check(arr[0] == 99, "Set item works correctly")
+        self.check(arr[0] == 99,
+                   "Set item works correctly",
+                   expected=99,
+                   actual=arr[0])
 
         # Test 6: Get item (IndexError)
         try:
@@ -149,11 +177,6 @@ class TestArray:
         print(f"🏆 Final Score: {score:.2f}%")
 
 if __name__ == "__main__":
-
-
-    array = [1, 2, 3, 4]
-    for i in array:
-        print(i)
 
     tester = TestArray()
     tester.run_tests()
