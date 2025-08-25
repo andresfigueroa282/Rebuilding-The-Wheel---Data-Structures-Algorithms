@@ -48,12 +48,28 @@ class Array:
             for i in range(self.len()):
                 if i == index:
                     newArray[i] = value
-                    
+                    switch = -1
+                newArray[i] = self.array[i + switch]
         
     def delete(self, index):
         if self.inBounds(index):
+            self.size -= 1
+            switch = 0
+            newArray = [] * self.capacity
+            for i in range(self.len()):
+                if i == index:
+                    switch = 1
+                newArray[i] = self.array[i + switch]
 
     def pop(self):
+        if self.size == 0:
+            return "There are no elements to pop"
+        popped = self.array[0]
+        newArray = [] * self.capacity
+        for i in range(1, self.len()):
+            newArray[i] = self.array[i]
+        self.array = newArray[i]
+        return popped
 
     def inBounds(self, index):
         return index < 0 or index >= self.size - 1
