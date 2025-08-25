@@ -15,27 +15,48 @@ class Array:
     def append(self, value):
         self.size += 1
         if self.size > self.capacity:
-            self.capacity += 1
+            self.resize()
         switch = False
         for i in range(self.capacity):
             if self.array[i] is None and switch == False:
                 self.array[i] = value
                 switch = True
 
+    # Adjusts capacity if full, this is what makes a dynamic array dynamic
+    def resize(self):
+        self.capacity += 4
+        newArray = [] * self.capacity
+        for i in range(self.len()):
+            newArray[i] = self.array[i]
+        self.array = newArray
+
     def __getitem__(self, index):
+        if self.inBounds(index):
+            return self.array[index]
 
     def __setitem__(self, index, value):
+        if self.inBounds(index):
+            self.array[index] = value
 
     def insert(self, index, value):
+        if self.inBounds(index):
+            self.size += 1
+            if self.size > self.capacity:
+                self.resize()
+            switch = 0
+            newArray = [] * self.capacity
+            for i in range(self.len()):
+                if i == index:
+                    newArray[i] = value
+                    
         
     def delete(self, index):
-        
+        if self.inBounds(index):
 
     def pop(self):
 
     def inBounds(self, index):
-        if index < 0 or index >= self.size
-
+        return index < 0 or index >= self.size - 1
     
     def print(self):
 
