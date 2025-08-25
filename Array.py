@@ -1,100 +1,43 @@
 class Array:
-    capacity = 0
-    array = []
-    size = 0
+
+    capacity = 0 # The total number of slots available in memory (The number of seats that exist)
+    array = [] # The memory
+    size = 0 # The number of actual elements stored in the array (The number of seats that are filled)
 
     def __init__(self, capacity = 5):
         self.capacity = capacity
         self.array = [None] * capacity
-        self.size = capacity
 
+    # Return the number of stored elements, not capacity of the array
     def len(self):
         return self.size
     
     def append(self, value):
-
-        if self.freeSpaceCheck():
-            switch = False
-            print("Length of Array = ", self.len())
-            for i in range(self.len()):
-                if self.array[i] is None and switch == False:
-                    print("Value @ Index", i , " is ", self.array[i])
-                    self.array[i] = value
-                    switch = True
-                print("Index", i)
-        
-        else:
-            self.size += 1
-            newArray = [self.size]
-            for i in range(self.len()):
-                newArray[i] = self.array
-            newArray[self.size - 1] = value
+        self.size += 1
+        if self.size > self.capacity:
+            self.capacity += 1
+        switch = False
+        for i in range(self.capacity):
+            if self.array[i] is None and switch == False:
+                self.array[i] = value
+                switch = True
 
     def __getitem__(self, index):
-        print(self.len())
-        if index < 0 or index >= self.len():
-            return "Index Out of Bounds Error"
-        else:
-            print("@ __get__    Index is ", index)
-            return self.array[index]
 
     def __setitem__(self, index, value):
-        if index < 0 or index >= self.len():
-            return "Index Out of Bounds Error"
-        else:
-            self.array[index] = value
 
     def insert(self, index, value):
-        if index < 0 or index >= self.len():
-            return "Index Out of Bounds Error"
-        if self.array[index] is None:
-            self.array[index] = value
-        else:
-            switch = False
-            self.size += 1
-            newArray = [None] * self.size
-            for i in range(self.size):
-                if switch == False:
-                    newArray[i] == self.array[i]
-                    if i == index:
-                        switch = True
-                        newArray[i] == value
-                else:
-                    newArray[i] == self.array[i - 1]
-                    
+        
     def delete(self, index):
-        if index < 0 or index >= self.len():
-            return "Index Out of Bounds Error"
-        else:
-            switch = False
-            self.size -= 1
-            newArray = [None] * self.size
-            for i in range(self.size):
-                if i < index:
-                    newArray[i] == self.array[i]
-                if i > index:
-                    newArray[i] == self.array[i - 1]
+        
 
     def pop(self):
-        popped = self.array[self.size - 1]
-        self.size -= 1
-        newArray = [None] * self.size
-        for i in range(self.size):
-            newArray[i] == self.array[i]
-        return 
 
-    def freeSpaceCheck(self):
-        if None in self.array:
-            return True
-        else:
-            return False
+    def inBounds(self, index):
+        if index < 0 or index >= self.size
+
     
     def print(self):
-        arrayString = "["
-        for i in range(self.len() - 1):
-            arrayString = arrayString.join(self.array[i], ", ")
-        arrayString = arrayString.join(self.array[self.len()], "]")
-        print(arrayString)
 
 
 
