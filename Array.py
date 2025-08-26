@@ -39,17 +39,7 @@ class Array:
             self.array[index] = value
 
     def insert(self, index, value):
-        if self.inBounds(index):
-            self.size += 1
-            if self.size > self.capacity:
-                self.resize()
-            switch = 0
-            newArray = [] * self.capacity
-            for i in range(self.len()):
-                if i == index:
-                    newArray[i] = value
-                    switch = -1
-                newArray[i] = self.array[i + switch]
+        
         
     def delete(self, index):
         if self.inBounds(index):
@@ -74,9 +64,15 @@ class Array:
     def inBounds(self, index):
         return index < 0 or index >= self.size - 1
     
-    def print(self):
-
-
+    def printArray(self):
+        toPrint = "["
+        print(f"self.len(): {self.len()}")
+        for i in range(self.len()):
+            if i != self.len() - 1:
+                toPrint = toPrint + f"{self.array[i]}, "
+            else:
+                toPrint = toPrint + f"{self.array[i]}]"
+        return toPrint
 
 class TestArray:
     def __init__(self):
