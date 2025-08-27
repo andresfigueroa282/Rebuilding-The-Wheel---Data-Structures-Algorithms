@@ -13,11 +13,23 @@ class Array:
         return self.size
     
     def append(self, value):
-        
+        if self.size >= self.capacity:
+            self.resize()
+        self.array[self.size] = value
+        self.size += 1
+
+        #print(f"@ append() {self.printArray()}")
+    ''' What I was doing previously was copying every value from one array to a new one then copying. While it did work, it was overly complicated and took a much
+        longer time than the code above. Here, I am just assigning the last value of the array, which should
+        be a free open space in memory, to the value.'''
 
     # Adjusts capacity if full, this is what makes a dynamic array dynamic
     def resize(self):
-        
+        self.capacity += 4
+        newArray = [None] * self.capacity
+        for i in range(self.len()):
+            newArray[i] = self.array[i]
+        self.array = newArray
 
     def __getitem__(self, index):
         if self.inBounds(index):
@@ -29,21 +41,50 @@ class Array:
 
     def insert(self, index, value):
         if self.inBounds(index):
+            if self.size + 1 == self.capacity:
+                self.resize()
             
+            newArray = [None] * self.capacity
+            for i in range(index):
+                newArray[i] = self.array[i]
+            newArray[index] = value
+            for i in range(index, self.size):
+                newArray[i + 1] = self.array[i]
 
+            self.array = newArray
+            self.size += 1
+
+            #print(f"@ insert {self.printArray()}")
         
     def delete(self, index):
-        if self.inBounds(index):
-            
+        if self.inBounds(index) and self.size != 0:
+            newArray = [None] * self.capacity
+            for i in range(index):
+                newArray[i] = self.array[i]
+        
+            for i in range(index, self.size + 1):
+                newArray[i] = self.array[i + 1]
 
+            self.array = newArray
+            self.size -= 1
+
+            #print(f"@ delete {self.printArray()}")
+            
     def pop(self):
         if self.size == 0:
             return "There are no elements to pop"
-
-
+        
+        popped = self.array[self.size - 1]
+        self.array[self.size] = None
+        self.size -= 1
+        return popped
+        
     def inBounds(self, index):
-        return index < 0 or index >= self.size - 1
-    
+        if 0 <= index < self.size:
+            return True
+        else:
+            raise IndexError
+
     def printArray(self):
         toPrint = "["
         for i in range(self.len()):
@@ -98,7 +139,7 @@ class TestArray:
 
         # Test 4: Pop
         popped = arr.pop()
-        self.check(popped == 20 and len(arr) == 1,
+        self.check(popped == 20 and arr.len() == 1,
                    "Pop returns and removes last element",
                    expected=(20, 1),
                    actual=(popped, arr.len()))
