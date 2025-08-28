@@ -1,3 +1,5 @@
+
+
 class Array:
 
     capacity = 0 # The total number of slots available in memory (The number of seats that exist)
@@ -12,11 +14,12 @@ class Array:
     def len(self):
         return self.size
     
+    # Adds values to the end of an array
     def append(self, value):
         if self.size >= self.capacity:
             self.resize()
         self.array[self.size] = value
-        self.size += 1
+        self.size += 1 # To tell us/adjusts how many elements are in the array
 
         #print(f"@ append() {self.printArray()}")
     ''' What I was doing previously was copying every value from one array to a new one then copying. While it did work, it was overly complicated and took a much
@@ -30,15 +33,19 @@ class Array:
         for i in range(self.len()):
             newArray[i] = self.array[i]
         self.array = newArray
+    '''Here, I am adding +4 memory to the array to add more elements. I am then copying the contents of the older array to the new one'''
 
+    # Getting an item at a specified index
     def __getitem__(self, index):
         if self.inBounds(index):
             return self.array[index]
 
+    # Setting the value at a specified index to the value given
     def __setitem__(self, index, value):
         if self.inBounds(index):  
             self.array[index] = value
 
+    # Inserting a value at a specified index
     def insert(self, index, value):
         if self.inBounds(index):
             if self.size + 1 == self.capacity:
@@ -55,7 +62,13 @@ class Array:
             self.size += 1
 
             #print(f"@ insert {self.printArray()}")
-        
+    '''Insert was really frusturating. Previously, I was conducting all operations in one loop. When the specified index was reached, I would then shift the values.
+        This is essentially the same idea. Copy paste, just two seperate for-loops. What made this so frusturating was that 'printArray' gave me the expected output.
+        Then, the actual array would have a bunch of 'None' values and one actual element. What made this really frusturating was that I needed to look at a solution
+        online. There is definitely a prettier solution than the one above, but I wanted these solutions to be my own! I am just annoyed with having to rely on an
+        online solution.'''
+    
+    # Deleting the value at the specified index
     def delete(self, index):
         if self.inBounds(index) and self.size != 0:
             newArray = [None] * self.capacity
@@ -69,7 +82,10 @@ class Array:
             self.size -= 1
 
             #print(f"@ delete {self.printArray()}")
-            
+    ''''delete()' was a lot easier after having figured out how to implement 'insert()'. In one for-loop, I essentially copied the values till index was reached. Then
+        in the second, I am copying and skipping over the index.'''
+
+    # Removing and returning the last element in the array    
     def pop(self):
         if self.size == 0:
             return "There are no elements to pop"
@@ -78,12 +94,16 @@ class Array:
         self.array[self.size] = None
         self.size -= 1
         return popped
-        
+    '''Here, I am just getting the last value of the array, assigning 'popped' the value. Then, I would set the last value of the array to None as to remove it.'''
+    
+    # Checks whether an index is within the bounds of the array and not  memory
     def inBounds(self, index):
-        if 0 <= index < self.size:
+        if 0 <= index and index < self.size:
             return True
         else:
             raise IndexError
+    '''If the index is between 0 and the length of the array, then the index is valid'''
+
 
     def printArray(self):
         toPrint = "["
@@ -93,6 +113,10 @@ class Array:
             else:
                 toPrint = toPrint + f"{self.array[i]}]"
         return toPrint
+    '''This wasn't required, but helped me understand what was happening in each function. There were aalso a lot more print statements.'''
+
+# --------------------------------------------------------------------------------------------------------------------------------
+# The TestArray Class is NOT MY WORK I used ChatGPT to create tests for me becuase I am unfamiliar with how to create tests and I want to focus more on the implementation.
 
 class TestArray:
     def __init__(self):
