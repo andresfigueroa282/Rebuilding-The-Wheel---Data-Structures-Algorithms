@@ -152,6 +152,7 @@ class Array:
                     temp = self.array[j]
                     self.array[j] = self.array[j + 1]
                     self.array[j + 1] = temp
+    '''Elements next to each other are swapped'''
 
     def selectionSort(self):
         for i in range(self.len()):
@@ -162,10 +163,11 @@ class Array:
             temp = self.array[i]
             self.array[i] = self.array[min_index]
             self.array[min_index] = temp
+    '''The smallest element is swapped and sent to the front'''
         
     
 
 if __name__ == "__main__":
-    from TestArray import TestArray
+    from tests.TestArray import TestArray
     tester = TestArray()
     tester.run_tests()

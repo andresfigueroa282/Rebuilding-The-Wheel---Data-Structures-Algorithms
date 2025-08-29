@@ -1,7 +1,7 @@
 # --------------------------------------------------------------------------------------------------------------------------------
 # The TestArray Class is NOT MY WORK I used ChatGPT to create tests for me becuase I am unfamiliar with how to create tests and I want to focus more on the implementation.
 
-from Array import Array
+from data_structures.Array import Array
 
 class TestArray:
     def __init__(self):
