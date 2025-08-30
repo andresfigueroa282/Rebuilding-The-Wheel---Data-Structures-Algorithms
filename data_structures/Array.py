@@ -1,7 +1,7 @@
 """
 ====================================
 Author: Andres Figueroa
-Email: andresfigueroa282@gmail.com
+Email: andresfigueroa282@brandeis.edu
 
 Description:
     This file implements a custom Array class along with 
