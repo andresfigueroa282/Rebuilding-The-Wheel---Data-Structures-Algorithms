@@ -1,4 +1,20 @@
+"""
+====================================
+Author: Andres Figueroa
+Email: andresfigueroa282@gmail.com
 
+Description:
+    This file implements a custom Array class along with 
+    different operations (insert, delete, search, sort, etc.).
+
+How to Run:
+    Option 1: Run directly (if this file is standalone):
+        python Array.py
+
+    Option 2: Run as a module (if using project structure):
+        python -m data_structures.Array
+====================================
+"""
 class Array:
 
     capacity = 0 # The total number of slots available in memory (The number of seats that exist)
@@ -119,6 +135,7 @@ class Array:
             if self.array[i] == value:
                 return i
         return -1
+    '''Goes through the array until the value is found and returns that index'''
     
     def binarySearch(self, value):
         lower = 0
@@ -144,6 +161,9 @@ class Array:
             #print(f"upper on run {run}: {upper}")
         
         return -1
+    '''Halves the search each iteration(O(log n)). REQUIRES A SORTED ARRAY. Finds a midpoint, then determines if the value is greater or less than the given value.
+        If the value is greater than the midpoint, then we search the right half of the array, else the left half if less than the midpoint. This continues till the
+        search is reduced to a single value, hopefully the value we are looking for'''
     
     def recursiveBinarySearch(self, array, target, left, right):
         if left > right:
@@ -158,6 +178,7 @@ class Array:
         
         else:
             return self.recursiveBinarySearch(array, target, midpoint + 1, right)
+    '''Binary Search done recursively'''
     
     def bubbleSort(self):
         for i in range(self.len()):
@@ -166,18 +187,18 @@ class Array:
                     temp = self.array[j]
                     self.array[j] = self.array[j + 1]
                     self.array[j + 1] = temp
-    '''Elements next to each other are swapped'''
+    '''Elements next to each other are swapped. Comparing neighbors.'''
 
     def selectionSort(self):
         for i in range(self.len()):
-            min_index = i
+            curr = i
             for j in range(1 + i, self.len()):
-                if self.array[j] < self.array[min_index]:
-                    min_index = j
+                if self.array[j] < self.array[curr]:
+                    curr = j
             temp = self.array[i]
-            self.array[i] = self.array[min_index]
-            self.array[min_index] = temp
-    '''The smallest element is swapped and sent to the front'''
+            self.array[i] = self.array[curr]
+            self.array[curr] = temp
+    '''The smallest element is swapped and sent to the front in an ordered manner. Finding the smallest value for the rest of the array and swapping with the current value.'''
 
     def insertionSort(self):
         for i in range(1, self.len()):
@@ -188,7 +209,7 @@ class Array:
                 j -= 1
             
             self.array[j + 1] = curr
-
+    '''Inserting an element in the "right place", shifting larger elements to the right'''
         
     
 
