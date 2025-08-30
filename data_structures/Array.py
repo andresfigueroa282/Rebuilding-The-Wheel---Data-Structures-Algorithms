@@ -145,6 +145,20 @@ class Array:
         
         return -1
     
+    def recursiveBinarySearch(self, array, target, left, right):
+        if left > right:
+            return -1
+        midpoint = (left + right) // 2
+
+        if array[midpoint] == target:
+            return midpoint
+
+        elif array[midpoint] > target:
+            return self.recursiveBinarySearch(array, target, left, midpoint - 1)
+        
+        else:
+            return self.recursiveBinarySearch(array, target, midpoint + 1, right)
+    
     def bubbleSort(self):
         for i in range(self.len()):
             for j in range(0, self.len() - i - 1):
@@ -164,6 +178,17 @@ class Array:
             self.array[i] = self.array[min_index]
             self.array[min_index] = temp
     '''The smallest element is swapped and sent to the front'''
+
+    def insertionSort(self):
+        for i in range(1, self.len()):
+            curr = self.array[i]
+            j = i - 1
+            while j >= 0 and self.array[j] > curr:
+                self.array[j + 1] = self.array[j]
+                j -= 1
+            
+            self.array[j + 1] = curr
+
         
     
 
