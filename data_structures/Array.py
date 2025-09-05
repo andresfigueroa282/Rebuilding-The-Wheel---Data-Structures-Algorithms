@@ -13,6 +13,12 @@ How to Run:
 
     Option 2: Run as a module (if using project structure):
         python -m data_structures.Array
+
+Note:
+    I used ChatGPT to give me a programming assignment which
+    provided me code to test my work and outline some of the
+    rules of engagement. The whole point of this is to learn
+    and improve. Everything within the class Array is my work.
 ====================================
 """
 class Array:
